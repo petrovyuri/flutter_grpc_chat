@@ -22,11 +22,17 @@ class _App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authRepo = AppDependsProvider.of(context).authRepo;
+    final deps = AppDependsProvider.of(context);
     return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: Text(authRepo.name),
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(deps.authRepo.name),
+            Text(deps.chatsRepo.name),
+            Text(deps.filesRepo.name),
+            Text(deps.env.name),
+          ],
         ),
       ),
     );
