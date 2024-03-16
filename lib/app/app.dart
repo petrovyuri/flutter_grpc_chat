@@ -40,12 +40,12 @@ class _App extends StatelessWidget {
           Text(deps.chatsRepo.name),
           Text(deps.filesRepo.name),
           Text(deps.env.name),
-          Text(context.read<AuthBloc>().state.toString()),
+          Text(context.watch<AuthBloc>().state.toString()),
           TextButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (_) {
-                    return AuthScreen();
+                    return const AuthScreen();
                   },
                 ));
               },
@@ -53,14 +53,5 @@ class _App extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }

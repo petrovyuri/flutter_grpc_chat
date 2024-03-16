@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_grpc_chat/features/auth/domain/state/auth_bloc.dart';
 import 'package:flutter_grpc_chat/features/auth/domain/state/auth_event.dart';
+import 'package:flutter_grpc_chat/features/auth/domain/state/auth_state.dart';
 
 class AuthSmsForm extends StatefulWidget {
-  const AuthSmsForm({super.key, required this.phone});
-
-  final String phone;
+  const AuthSmsForm({super.key});
 
   @override
   State<AuthSmsForm> createState() => _NotAuthViewState();
@@ -43,9 +42,11 @@ class _NotAuthViewState extends State<AuthSmsForm> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    
-                    context.read<AuthBloc>().add(
-                        AuthEventSendSms(phone: phone, code: _controller.text));
+                    final currentPhone =
+                        (context.read<AuthBloc>().state as AuthStateSmsSent)
+                            .message;
+                    context.read<AuthBloc>().add(AuthEventSendSms(
+                        phone: currentPhone, code: _controller.text));
                   }
                 },
                 child: const Text('Send SMS'),

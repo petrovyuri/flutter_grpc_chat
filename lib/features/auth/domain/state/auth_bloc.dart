@@ -7,8 +7,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthRepo authRepo;
 
   AuthBloc(this.authRepo) : super(AuthStateNotAuthorized()) {
-    on<AuthEventSignInSms>((event, emit) => _signInSms);
-    on<AuthEventSendSms>((event, emit) => _sendSms);
+    on<AuthEventSignInSms>(_signInSms);
+    on<AuthEventSendSms>(_sendSms);
   }
 
   Future<void> _signInSms(
@@ -16,8 +16,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       if (state is AuthStateLoading) return;
       emit(AuthStateLoading());
-      final message = await authRepo.signInSms(event.phone);
-      emit(AuthStateSmsSent(message: message));
+      await authRepo.signInSms(event.phone);
+      emit(AuthStateSmsSent(message: event.phone));
     } on Object catch (e, st) {
       emit(AuthStateError(message: e.toString()));
       addError(e, st);
