@@ -6,7 +6,7 @@ import 'package:flutter_grpc_chat/features/auth/domain/state/auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthRepo authRepo;
 
-  AuthBloc(super.initialState, this.authRepo) {
+  AuthBloc(this.authRepo) : super(AuthStateNotAuthorized()) {
     on<AuthEventSignInSms>((event, emit) => _signInSms);
     on<AuthEventSendSms>((event, emit) => _sendSms);
   }
