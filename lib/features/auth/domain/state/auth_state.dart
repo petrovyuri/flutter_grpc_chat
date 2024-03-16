@@ -19,8 +19,12 @@ final class AuthStateAuthorized extends AuthState {
 
 final class AuthStateSmsSent extends AuthState {
   final String message;
+  final String phone;
 
-  AuthStateSmsSent({required this.message});
+  AuthStateSmsSent({
+    required this.message,
+    required this.phone,
+  });
 }
 
 final class AuthStateLoading extends AuthState {}

@@ -17,3 +17,5 @@ final class AuthEventSendSms extends AuthEvent {
 
   AuthEventSendSms({required this.phone, required this.code});
 }
+
+final class AuthEventLogout extends AuthEvent {}
