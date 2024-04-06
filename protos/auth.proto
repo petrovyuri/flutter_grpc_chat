@@ -1,0 +1,48 @@
+syntax="proto3";
+
+
+service AuthRpc {
+    rpc SignIn (UserDto) returns (TokensDto);
+    rpc SignUp (UserDto) returns (TokensDto);
+    rpc RefreshToken (TokensDto) returns (TokensDto);
+    rpc UpdateUser (UserDto) returns (UserDto);
+    rpc DeleteUser (RequestDto) returns (ResponseDto);
+    rpc FetchUser (RequestDto) returns (UserDto);
+    rpc FindUser (FindDto) returns (ListUsersDto);
+    rpc SignInSms (RequestDto) returns (ResponseDto);
+    rpc SendSms (RequestDto) returns (TokensDto);
+}
+
+message ListUsersDto {
+    repeated UserDto users = 1;
+}
+
+message FindDto {
+    string key  = 1;
+    string limit = 2;
+    string offset = 3;
+}
+
+message UserDto {
+    string id = 1;
+    string username = 2;
+    string email = 3;
+    oneof optional_password {
+        string password = 4;
+    }
+}
+
+message TokensDto {
+    string access_token = 1;
+    string refresh_token = 2;
+}
+
+message RequestDto {
+    string phone = 1;
+    string code = 2;
+}
+
+message ResponseDto {
+    string message = 1;
+}
+

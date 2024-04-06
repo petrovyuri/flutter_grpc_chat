@@ -15,7 +15,7 @@ final class AppDependsProvider extends InheritedWidget {
 
   static AppDepends of(BuildContext context) {
     final provider =
-        context.dependOnInheritedWidgetOfExactType<AppDependsProvider>();
+        context.getInheritedWidgetOfExactType<AppDependsProvider>();
     assert(provider != null, 'Depends not found');
     return provider!.depends;
   }
