@@ -18,7 +18,10 @@ class App extends StatelessWidget {
       key: const ValueKey('AppDependsProvider'),
       depends: depends,
       child: BlocProvider(
-        create: (context) => AuthBloc(depends.authRepo),
+        create: (context) => AuthBloc(
+          depends.authRepo,
+          depends.secureStorage,
+        ),
         child: const MaterialApp(home: _App()),
       ),
     );

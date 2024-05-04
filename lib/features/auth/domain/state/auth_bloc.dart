@@ -2,11 +2,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_grpc_chat/features/auth/domain/i_auth_repo.dart';
 import 'package:flutter_grpc_chat/features/auth/domain/state/auth_event.dart';
 import 'package:flutter_grpc_chat/features/auth/domain/state/auth_state.dart';
+import 'package:flutter_grpc_chat/services/secure_storage/i_secure_storage.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthRepo authRepo;
+  final ISecureStorage secureStorage;
 
-  AuthBloc(this.authRepo) : super(AuthStateNotAuthorized()) {
+  AuthBloc(
+    this.authRepo,
+    this.secureStorage,
+  ) : super(AuthStateNotAuthorized()) {
     on<AuthEventSignInSms>(_signInSms);
     on<AuthEventSendSms>(_sendSms);
     on<AuthEventLogout>((event, emit) => emit(AuthStateNotAuthorized()));
