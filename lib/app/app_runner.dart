@@ -10,21 +10,29 @@ class AppRunner {
   final AppEnv env;
 
   AppRunner(this.env);
+  final _timer = Stopwatch();
+  final _timerElapsed = Stopwatch();
 
   Future<void> run() async {
+    _timer.start();
     runZonedGuarded(() async {
       await _initApp();
       final depends = AppDepends(env);
+      _timerElapsed.start();
       await depends.init(
         onError: (name, error, stackTrace) {
+          _timerElapsed.reset();
           throw '$name: $error, $stackTrace';
         },
-        onProgress: (name, progress) {
-          log('Init $name success: $progress%');
+        onProgress: (name) {
+          log('Init $name success: ${_timerElapsed.elapsedMilliseconds}ms');
+          _timerElapsed.reset();
         },
       );
 
       runApp(App(depends: depends));
+      log('Started in ${_timer.elapsedMilliseconds}ms');
+      _timer.stop();
     }, (error, stack) {
       log(error.toString(), stackTrace: stack, error: error);
       // TODO(yura): Report

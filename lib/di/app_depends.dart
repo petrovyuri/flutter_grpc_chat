@@ -11,13 +11,7 @@ import 'package:flutter_grpc_chat/features/files/domain/i_files_repo.dart';
 
 typedef OnError = void Function(
     String name, Object error, StackTrace? stackTrace);
-typedef OnProgress = void Function(String name, String progress);
-
-enum _AppDeps {
-  authRepo,
-  chatsRepo,
-  filesRepo,
-}
+typedef OnProgress = void Function(String name);
 
 final class AppDepends {
   late final IAuthRepo authRepo;
@@ -37,12 +31,7 @@ final class AppDepends {
         AppEnv.test => MockAuthRepo(),
         AppEnv.prod => ProdAuthRepo(),
       };
-      onProgress(
-          'authRepo',
-          _calc(
-            _AppDeps.authRepo.index,
-            _AppDeps.values.length,
-          ));
+      onProgress(authRepo.name);
     } on Object catch (error, stackTrace) {
       onError('authRepo', error, stackTrace);
     }
@@ -52,12 +41,8 @@ final class AppDepends {
         AppEnv.test => MockChatsRepo(),
         AppEnv.prod => ProdChatsRepo(),
       };
-      onProgress(
-          'chatsRepo',
-          _calc(
-            _AppDeps.chatsRepo.index,
-            _AppDeps.values.length,
-          ));
+      await Future.delayed(const Duration(seconds: 2));
+      onProgress(chatsRepo.name);
     } on Object catch (error, stackTrace) {
       onError('chatsRepo', error, stackTrace);
     }
@@ -67,18 +52,9 @@ final class AppDepends {
         AppEnv.test => MockFilesRepo(),
         AppEnv.prod => ProdFilesRepo(),
       };
-      onProgress(
-          'filesRepo',
-          _calc(
-            _AppDeps.filesRepo.index,
-            _AppDeps.values.length,
-          ));
+      onProgress(filesRepo.name);
     } on Object catch (error, stackTrace) {
       onError('filesRepo', error, stackTrace);
     }
-  }
-
-  String _calc(int current, int total) {
-    return ((current + 1) / total * 100).toStringAsFixed(0);
   }
 }
