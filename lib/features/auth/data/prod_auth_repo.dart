@@ -1,6 +1,6 @@
 import 'package:flutter_grpc_chat/features/auth/domain/i_auth_repo.dart';
 import 'package:flutter_grpc_chat/src/generated/auth.pbgrpc.dart';
-import 'package:grpc/grpc_web.dart';
+import 'package:grpc/grpc_or_grpcweb.dart';
 
 final class ProdAuthRepo implements IAuthRepo {
   @override
@@ -9,8 +9,8 @@ final class ProdAuthRepo implements IAuthRepo {
   late final AuthRpcClient _client;
 
   ProdAuthRepo() {
-    final channel =
-        GrpcWebClientChannel.xhr(Uri.parse('http://188.120.225.54:8500'));
+    final channel = GrpcOrGrpcWebClientChannel.toSingleEndpoint(
+        host: '188.120.225.54', port: 8500, transportSecure: false);
     _client = AuthRpcClient(channel);
   }
 
