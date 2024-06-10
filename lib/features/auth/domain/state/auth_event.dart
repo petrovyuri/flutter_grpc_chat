@@ -19,3 +19,5 @@ final class AuthEventSendSms extends AuthEvent {
 }
 
 final class AuthEventLogout extends AuthEvent {}
+
+final class AuthEventInit extends AuthEvent {}

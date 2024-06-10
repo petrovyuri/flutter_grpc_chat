@@ -21,7 +21,7 @@ class App extends StatelessWidget {
         create: (context) => AuthBloc(
           depends.authRepo,
           depends.secureStorage,
-        ),
+        )..add(AuthEventInit()),
         child: const MaterialApp(home: _App()),
       ),
     );

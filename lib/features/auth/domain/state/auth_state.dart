@@ -7,15 +7,7 @@ sealed class AuthState extends Equatable {
 
 final class AuthStateNotAuthorized extends AuthState {}
 
-final class AuthStateAuthorized extends AuthState {
-  final String accessToken;
-  final String refreshToken;
-
-  AuthStateAuthorized({
-    required this.accessToken,
-    required this.refreshToken,
-  });
-}
+final class AuthStateAuthorized extends AuthState {}
 
 final class AuthStateSmsSent extends AuthState {
   final String message;
